@@ -1,0 +1,134 @@
+body{
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #333;
+    margin: 30px;
+}
+
+/* ================= HEADER ================= */
+
+.header-table{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.logo-td{
+    width: 25%;
+}
+
+.empresa-td{
+    width: 75%;
+    text-align: right;
+}
+
+.logo{
+    width: 90px;
+}
+
+.empresa-td h1{
+    color: #1E3A5F;
+    margin: 0;
+    font-size: 28px;
+}
+
+.empresa-td p{
+    margin: 2px 0;
+    font-size: 13px;
+    color: #555;
+}
+
+/* ================= LINEA ================= */
+
+.linea{
+    width: 100%;
+    height: 4px;
+    background: #C62828;
+    margin-bottom: 20px;
+}
+
+/* ================= TITULO ================= */
+
+.titulo{
+    text-align: center;
+    color: #1E3A5F;
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+/* ================= INFO ================= */
+
+.info-table{
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.info-table td{
+    padding: 5px;
+}
+
+/* ================= TABLA ================= */
+
+.tabla-productos{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabla-productos thead{
+    background: #1E3A5F;
+    color: white;
+}
+
+.tabla-productos th{
+    padding: 10px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+
+.tabla-productos td{
+    padding: 8px;
+    border: 1px solid #ddd;
+    font-size: 11px;
+}
+
+.tabla-productos tbody tr:nth-child(even){
+    background: #F4F6F9;
+}
+
+/* ================= TOTAL ================= */
+
+.contenedor-total{
+    margin-top: 25px;
+}
+
+.tabla-total{
+    width: 35%;
+    margin-left: auto;
+    border-collapse: collapse;
+}
+
+.label-total{
+    background: #1E3A5F;
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.valor-total{
+    background: #C62828;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    margin-top: 50px;
+    text-align: center;
+    font-size: 11px;
+    color: #666;
+}

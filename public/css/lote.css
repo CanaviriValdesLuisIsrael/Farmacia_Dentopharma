@@ -1,0 +1,62 @@
+.lote-card {
+    border-radius: 12px;
+    transition: 0.3s;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.lote-card:hover {
+    transform: translateY(-5px);
+}
+
+.lote-header {
+    font-size: 14px;
+    color: #6c757d;
+    padding: 10px 15px;
+}
+
+.lote-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #6c757d, #343a40);
+    border-radius: 50%;
+    margin: auto;
+}
+
+.lote-avatar-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.detalle {
+    font-size: 13px;
+    color: #6c757d;
+}
+.lote-normal {
+    background-color: #ffffff;
+}
+
+.lote-proximo {
+    background-color: #ffc107; /* amarillo */
+    color: #000;
+}
+
+.lote-vencido {
+    background-color: #dc3545; /* rojo */
+    color: #fff;
+    
+}
+
+.lote-vencido .detalle {
+    color: #fff !important;
+}
+
+.lote-vencido .lote-header {
+    color: #fff !important;
+}
+
+.lote-vencido h5 {
+    color: #fff !important;
+}

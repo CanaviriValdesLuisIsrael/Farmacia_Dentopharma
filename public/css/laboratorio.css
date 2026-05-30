@@ -1,0 +1,47 @@
+.fade-custom {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+}
+
+.fade-custom.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-custom.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+/* Logo de laboratorio */
+.img-logo {
+    width: 45px;         /* tamaño pequeño */
+    height: 45px;
+    object-fit: cover;   /* recorta bien la imagen */
+    border-radius: 50%;  /* circular */
+    border: 2px solid #dee2e6; /* borde suave */
+}
+
+/* Espacio cuando no hay imagen */
+.logo-vacio {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #e9ecef;
+    display: inline-block;
+}
+
+/* Centrar contenido de la columna */
+#tabla-laboratorios td:nth-child(2) {
+    text-align: center;
+    vertical-align: middle;
+}
+.swal2-confirm {
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.swal2-confirm:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
