@@ -326,10 +326,12 @@
                             </button>
 @endif
 -->
-                        <button type="button" data-toggle="modal" data-target="#crearproducto"
-                            class="btn bg-gradient-primary ml-2">
-                            Crear producto
-                        </button>
+                        @if (auth()->user()->hasRole('admin'))
+                            <button type="button" data-toggle="modal" data-target="#crearproducto"
+                                class="btn bg-gradient-primary ml-2">
+                                Crear producto
+                            </button>
+                        @endif
                     </h1>
                 </div>
 
@@ -389,6 +391,8 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    const productoConfig = { esAdmin: {{ $esAdmin ? 'true' : 'false' }} };
+    const productoConfig = {
+        esAdmin: {{ $esAdmin ? 'true' : 'false' }}
+    };
 </script>
 <script src="{{ asset('js/Producto.js') }}"></script>

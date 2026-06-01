@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\LoteProducto;
 use App\Models\Proveedor;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class LoteController extends Controller
 {
     // =========================================
     // VISTA PRINCIPAL DE LOTES
-    // Ambos roles pueden acceder
     // =========================================
     public function loteprod()
     {
@@ -22,7 +22,7 @@ class LoteController extends Controller
     }
 
     // =========================================
-    // BUSCAR LOTES (AJAX)
+    // BUSCAR LOTES (AJAX) — Solo lotes con stock > 0 y no vencidos
     // =========================================
     public function buscar(Request $request)
     {
@@ -34,10 +34,10 @@ class LoteController extends Controller
                 $q->where('nombre_comercial', 'LIKE', "%$buscar%");
             })
             ->where('cantidad_por_caja', '>', 0)
+            ->where('fecha_vencimiento', '>=', Carbon::today())
             ->orderBy('fecha_vencimiento', 'asc')
             ->get();
 
-        // Añadir el rol al response para controlar botones en JS
         return response()->json([
             'lotes'   => $lotes,
             'esAdmin' => $esAdmin,
@@ -46,15 +46,50 @@ class LoteController extends Controller
 
     // =========================================
     // LOTES EN RIESGO (DASHBOARD)
+    // Solo lotes con stock > 0 que vencen en ≤ 6 meses
     // =========================================
     public function lotesRiesgo()
     {
+        $limite = Carbon::now()->addMonths(6);
+
         $lotes = LoteProducto::with(['producto.laboratorio', 'producto.categoria', 'proveedor'])
             ->where('cantidad_por_caja', '>', 0)
+            ->where('fecha_vencimiento', '<=', $limite)
             ->orderBy('fecha_vencimiento', 'asc')
             ->get();
 
         return response()->json($lotes);
+    }
+
+    // =========================================
+    // CUARENTENA: vencidos + sin stock (solo admin)
+    // =========================================
+    public function cuarentena()
+    {
+        return view('admin.adm_cuarentena');
+    }
+
+    public function datoCuarentena()
+    {
+        $hoy = Carbon::today();
+
+        // Vencidos con stock
+        $vencidos = LoteProducto::with(['producto.laboratorio', 'proveedor'])
+            ->where('fecha_vencimiento', '<', $hoy)
+            ->where('cantidad_por_caja', '>', 0)
+            ->orderBy('fecha_vencimiento', 'asc')
+            ->get();
+
+        // Todos los sin stock
+        $sinStock = LoteProducto::with(['producto.laboratorio', 'proveedor'])
+            ->where('cantidad_por_caja', '<=', 0)
+            ->orderBy('fecha_vencimiento', 'asc')
+            ->get();
+
+        return response()->json([
+            'vencidos'  => $vencidos,
+            'sin_stock' => $sinStock,
+        ]);
     }
 
     // =========================================
@@ -67,7 +102,7 @@ class LoteController extends Controller
         }
 
         $request->validate([
-            'cantidad_por_caja' => 'required|numeric|min:1',
+            'cantidad_por_caja' => 'required|numeric|min:0',
         ]);
 
         $lote = LoteProducto::findOrFail($id);

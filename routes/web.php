@@ -78,17 +78,13 @@ Route::middleware(['auth', 'role:admin,empleado', 'prevent-back-history'])->grou
     Route::post('/usuario/cambiar-contra', [UsuarioController::class, 'cambiarContra'])->name('usuario.cambiarContra');
     Route::post('/usuario/cambiar-avatar', [UsuarioController::class, 'cambiarAvatar'])->name('usuario.cambiarAvatar');
 
-    // Ver lista de usuarios (solo lectura para empleado)
-    Route::get('/admin/registrar-usuario', [GestionController::class, 'registroEmp'])->name('admin.adm_usuario');
-    Route::get('/admin/buscar-empleado', [AdminController::class, 'index']);
-
-    // Ventas — ambos roles acceden, pero el controlador filtra por rol
+    // Ventas — ambos roles
     Route::get('admin/venta', [VentaController::class, 'ventas'])->name('admin.adm_venta');
     Route::get('/ventas/estadisticas', [VentaController::class, 'estadisticas'])->name('ventas.estadisticas');
     Route::get('/venta/imprimir/{id}', [VentaController::class, 'imprimir'])->name('venta.imprimir');
     Route::get('/venta/{id}/imprimir', [VentaController::class, 'imprimir']);
 
-    // Compra / Carrito — ambos pueden vender
+    // Compra / Carrito
     Route::get('/admin/compra', fn() => view('admin.adm_compra'))->name('admin.compra');
     Route::post('/admin/guardar-venta', [CompraController::class, 'store']);
     Route::get('/cliente/buscar/{ci}', [CompraController::class, 'buscarCliente']);
@@ -107,7 +103,7 @@ Route::middleware(['auth', 'role:admin,empleado', 'prevent-back-history'])->grou
     Route::get('admin/proveedor', [ProveedorController::class, 'proveed'])->name('admin.adm_proveedor');
     Route::get('/admin/listar-proveedores', [ProveedorController::class, 'listar']);
 
-    // Atributos — ambos pueden ver
+    // Atributos
     Route::get('admin/adm_atributo', [AdminController::class, 'atributo'])->name('admin.adm_atributo');
     Route::get('/admin/listar-laboratorios', [LaboratorioController::class, 'listar']);
     Route::get('/admin/listar-categorias', [CategoriaController::class, 'listar']);
@@ -118,17 +114,19 @@ Route::middleware(['auth', 'role:admin,empleado', 'prevent-back-history'])->grou
 // ============================================================
 Route::middleware(['auth', 'role:admin', 'prevent-back-history'])->group(function () {
 
-    // Gestión de usuarios
+    // Usuarios
+    Route::get('/admin/registrar-usuario', [GestionController::class, 'registroEmp'])->name('admin.adm_usuario');
+    Route::get('/admin/buscar-empleado', [AdminController::class, 'index']);
     Route::post('/admin/registrar-usuario', [GestionController::class, 'register'])->name('admin.registrar.usuario');
     Route::post('/admin/eliminar-usuario', [GestionController::class, 'eliminarUsuario'])->name('usuario.eliminar');
 
-    // Laboratorios — solo admin crea/edita/elimina
+    // Laboratorios
     Route::post('/admin/crear-laboratorio', [LaboratorioController::class, 'crearlab'])->name('laboratorio.crear');
     Route::post('/laboratorio/{id}/logo', [LaboratorioController::class, 'cambiarLogo']);
     Route::delete('/laboratorio/{id}', [LaboratorioController::class, 'eliminar']);
     Route::put('/laboratorio/{id}', [LaboratorioController::class, 'update']);
 
-    // Categorías — solo admin crea/edita/elimina
+    // Categorías
     Route::post('/admin/crear-categoria', [CategoriaController::class, 'crearCat'])->name('categoria.crear');
     Route::delete('/categoria/{id}', [CategoriaController::class, 'eliminar']);
     Route::put('/categoria/{id}', [CategoriaController::class, 'update']);
@@ -139,16 +137,22 @@ Route::middleware(['auth', 'role:admin', 'prevent-back-history'])->group(functio
     Route::put('/producto/{id}', [ProductoController::class, 'update']);
     Route::delete('/producto/{id}', [ProductoController::class, 'eliminar']);
 
-    // Proveedores — solo admin crea/edita/elimina
+    // Proveedores
     Route::post('/admin/proveedor/crear', [ProveedorController::class, 'crearProv'])->name('admin.proveedor.crear');
     Route::post('/proveedor/{id}/avatar', [ProveedorController::class, 'cambiarAvatar']);
     Route::delete('/proveedor/{id}', [ProveedorController::class, 'eliminar']);
     Route::put('/proveedor/{id}', [ProveedorController::class, 'update']);
 
-    // Lotes — solo admin edita y elimina lotes existentes
+    // Lotes — solo admin edita y elimina
     Route::put('/lote/{id}', [LoteController::class, 'update']);
     Route::delete('/lote/{id}', [LoteController::class, 'eliminar']);
 
-    // Ventas — solo admin puede eliminar ventas
+    // Ventas — solo admin elimina y ve reportes
     Route::delete('/venta/{id}', [VentaController::class, 'destroy'])->name('venta.destroy');
+    Route::get('/ventas/reportes', [VentaController::class, 'reportes'])->name('ventas.reportes');
+    Route::get('/ventas/reportes/datos', [VentaController::class, 'datoReportes'])->name('ventas.reportes.datos');
+
+    // Cuarentena
+    Route::get('/admin/cuarentena', [LoteController::class, 'cuarentena'])->name('admin.cuarentena');
+    Route::get('/admin/cuarentena/datos', [LoteController::class, 'datoCuarentena']);
 });

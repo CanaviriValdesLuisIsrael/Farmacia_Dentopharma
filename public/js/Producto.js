@@ -86,21 +86,22 @@ function buscar_producto(valor = "") {
 
                     <div class="producto-footer text-center">
 
-                        <button class="btn btn-info btn-avatar" data-id="${prod.id_producto}">
+                        ${productoConfig.esAdmin ? `
+                        <button class="btn btn-info btn-avatar" data-id="${prod.id_producto}" title="Cambiar imagen">
                             <i class="fas fa-image"></i>
                         </button>
-
-                        <button class="btn btn-success btn-editar" data-id="${prod.id_producto}">
+                        <button class="btn btn-success btn-editar" data-id="${prod.id_producto}" title="Editar">
                             <i class="fas fa-edit"></i>
+                        </button>` : ''}
+
+                        <button class="btn btn-primary btn-agregar" data-id="${prod.id_producto}" title="A\xf1adir lote">
+                            <i class="fas fa-plus"></i> Lote
                         </button>
 
-                        <button class="btn btn-primary btn-agregar" data-id="${prod.id_producto}">
-                            <i class="fas fa-plus"></i>
-                        </button>
-
-                        <button class="btn btn-danger btn-eliminar" data-id="${prod.id_producto}">
+                        ${productoConfig.esAdmin ? `
+                        <button class="btn btn-danger btn-eliminar" data-id="${prod.id_producto}" title="Eliminar">
                             <i class="fas fa-trash"></i>
-                        </button>
+                        </button>` : ''}
 
                     </div>
 

@@ -6,6 +6,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\Venta;
 use App\Models\LoteProducto;
+use App\Models\DetalleVenta;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +20,8 @@ class VentaController extends Controller
     // =========================================
     public function ventas()
     {
-        $user      = Auth::user();
-        $esAdmin   = $user->hasRole('admin');
+        $user       = Auth::user();
+        $esAdmin    = $user->hasRole('admin');
         $idEmpleado = $user->id_empleado;
 
         $query = Venta::with([
@@ -30,7 +31,6 @@ class VentaController extends Controller
             'detalles.producto.laboratorio',
         ])->orderBy('id_venta', 'desc');
 
-        // Si es empleado, filtra solo sus ventas
         if (!$esAdmin) {
             $query->where('id_empleado', $idEmpleado);
         }
@@ -41,9 +41,116 @@ class VentaController extends Controller
     }
 
     // =========================================
-    // ESTADÍSTICAS AJAX
-    // Administrador: estadísticas globales
-    // Empleado: solo estadísticas propias
+    // VISTA REPORTES (solo admin)
+    // =========================================
+    public function reportes()
+    {
+        return view('admin.adm_reportes_ventas');
+    }
+
+    // =========================================
+    // DATOS AJAX PARA REPORTES
+    // =========================================
+    public function datoReportes(Request $request)
+    {
+        $periodo = $request->get('periodo', 'mes');
+        $hoy     = Carbon::now();
+
+        switch ($periodo) {
+            case 'semana':
+                $desde = $hoy->copy()->subDays(6)->startOfDay();
+                $hasta = $hoy->copy()->endOfDay();
+                break;
+            case 'trimestre':
+                $desde = $hoy->copy()->subMonths(3)->startOfDay();
+                $hasta = $hoy->copy()->endOfDay();
+                break;
+            case 'anio':
+                $desde = $hoy->copy()->startOfYear();
+                $hasta = $hoy->copy()->endOfDay();
+                break;
+            case 'personalizado':
+                $desde = Carbon::parse($request->desde)->startOfDay();
+                $hasta  = Carbon::parse($request->hasta)->endOfDay();
+                break;
+            default: // mes
+                $desde = $hoy->copy()->startOfMonth();
+                $hasta = $hoy->copy()->endOfDay();
+        }
+
+        $ventasQ = Venta::with(['cliente', 'empleado', 'detalles.producto.categoria'])
+            ->whereBetween('fecha_venta', [$desde, $hasta])
+            ->orderBy('fecha_venta', 'desc');
+
+        $ventas = $ventasQ->get();
+
+        // KPIs
+        $total    = $ventas->sum('total_venta');
+        $cantidad = $ventas->count();
+        $promedio = $cantidad > 0 ? $total / $cantidad : 0;
+
+        // Mejor día
+        $porDia = $ventas->groupBy(fn($v) => Carbon::parse($v->fecha_venta)->format('Y-m-d'));
+        $mejorDia = $porDia->map(fn($g) => $g->sum('total_venta'))->sortDesc()->keys()->first();
+
+        // Ventas por día (para gráfica de barras)
+        $ventasPorDia = $porDia->map(fn($g) => $g->sum('total_venta'))
+            ->map(fn($t, $d) => ['fecha' => $d, 'total' => round($t, 2)])
+            ->values();
+
+        // Por vendedor
+        $porVendedor = $ventas->groupBy('id_empleado')
+            ->map(fn($g) => [
+                'nombre' => $g->first()->empleado->nombre ?? 'Sin nombre',
+                'total'  => round($g->sum('total_venta'), 2),
+            ])->values();
+
+        // Top 10 productos
+        $detalles = DetalleVenta::with('producto')
+            ->whereHas('venta', fn($q) => $q->whereBetween('fecha_venta', [$desde, $hasta]))
+            ->get();
+
+        $topProductos = $detalles->groupBy('id_producto')
+            ->map(fn($g) => [
+                'nombre'   => $g->first()->producto->nombre_comercial ?? '-',
+                'cantidad' => $g->sum('cantidad'),
+            ])
+            ->sortByDesc('cantidad')
+            ->take(10)
+            ->values();
+
+        // Por categoría
+        $porCategoria = $detalles->groupBy(fn($d) => $d->producto->categoria->nombre ?? 'Sin categoría')
+            ->map(fn($g) => ['categoria' => $g->first()->producto->categoria->nombre ?? 'Sin categoría',
+                             'total' => round($g->sum(fn($d) => $d->cantidad * $d->precio_unitario), 2)])
+            ->values();
+
+        // Lista simple ventas
+        $listaVentas = $ventas->map(fn($v) => [
+            'id_venta'    => $v->id_venta,
+            'fecha_venta' => Carbon::parse($v->fecha_venta)->format('d/m/Y'),
+            'cliente'     => $v->cliente->nombre ?? 'Sin cliente',
+            'vendedor'    => $v->empleado->nombre ?? '-',
+            'total_venta' => $v->total_venta,
+        ]);
+
+        return response()->json([
+            'kpis' => [
+                'total'     => round($total, 2),
+                'cantidad'  => $cantidad,
+                'promedio'  => round($promedio, 2),
+                'mejor_dia' => $mejorDia,
+            ],
+            'por_dia'       => $ventasPorDia,
+            'por_vendedor'  => $porVendedor,
+            'top_productos' => $topProductos,
+            'por_categoria' => $porCategoria,
+            'ventas'        => $listaVentas,
+        ]);
+    }
+
+    // =========================================
+    // ESTADÍSTICAS AJAX (dashboard)
     // =========================================
     public function estadisticas()
     {
@@ -52,21 +159,17 @@ class VentaController extends Controller
         $idEmpleado = $user->id_empleado;
         $hoy        = Carbon::today();
 
-        // Venta del día por este vendedor (ambos roles)
         $ventaDiaVendedor = Venta::whereDate('fecha_venta', $hoy)
             ->where('id_empleado', $idEmpleado)
             ->sum('total_venta');
 
         if ($esAdmin) {
-            // Admin: estadísticas globales
             $ventaDia  = Venta::whereDate('fecha_venta', $hoy)->sum('total_venta');
             $ventaMes  = Venta::whereMonth('fecha_venta', Carbon::now()->month)
                 ->whereYear('fecha_venta', Carbon::now()->year)
                 ->sum('total_venta');
-            $ventaAnio = Venta::whereYear('fecha_venta', Carbon::now()->year)
-                ->sum('total_venta');
+            $ventaAnio = Venta::whereYear('fecha_venta', Carbon::now()->year)->sum('total_venta');
         } else {
-            // Empleado: solo sus ventas
             $ventaDia  = Venta::whereDate('fecha_venta', $hoy)
                 ->where('id_empleado', $idEmpleado)->sum('total_venta');
             $ventaMes  = Venta::whereMonth('fecha_venta', Carbon::now()->month)
@@ -87,7 +190,6 @@ class VentaController extends Controller
 
     // =========================================
     // ELIMINAR VENTA — Solo administrador
-    // (protegido en rutas, doble validación aquí)
     // =========================================
     public function destroy($id)
     {
@@ -99,7 +201,6 @@ class VentaController extends Controller
         try {
             $venta = Venta::with('detalles')->findOrFail($id);
 
-            // Restaurar stock al eliminar venta
             foreach ($venta->detalles as $detalle) {
                 $lote = LoteProducto::find($detalle->id_lote);
                 if ($lote) {
@@ -126,8 +227,6 @@ class VentaController extends Controller
 
     // =========================================
     // IMPRIMIR COMPROBANTE PDF
-    // Ambos roles pueden imprimir,
-    // pero el empleado solo las suyas
     // =========================================
     public function imprimir($id)
     {
@@ -139,7 +238,6 @@ class VentaController extends Controller
             'detalles.producto.laboratorio',
         ])->findOrFail($id);
 
-        // Empleado solo puede imprimir sus propias ventas
         if (!$user->hasRole('admin') && $venta->id_empleado !== $user->id_empleado) {
             abort(403, 'No autorizado para imprimir esta venta.');
         }

@@ -3,14 +3,9 @@
 
 <!-- Tell the browser to be responsive to screen width 
 aqui colocas tu navegador
-
 -->
 
 @include('layouts.nav') 
-
-
-
-
 
 <!-- Modelo Cambiar Contraseña -->
 <div class="modal fade" id="cambiocontra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -411,9 +406,6 @@ aqui colocas tu navegador
 </script>
 @endif
 
-
-
-
 {{-- Avatar --}}
 @if ($errors->avatarErrors->any() || session('success_avatar') || session('showAvatarModal'))
 <script>
@@ -422,9 +414,6 @@ aqui colocas tu navegador
     });
 </script>
 @endif
-
-
-
 <script src="{{ asset('js/Usuario.js') }}"></script>
 
 @include('layouts.footer')

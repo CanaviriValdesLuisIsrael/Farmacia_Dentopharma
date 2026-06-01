@@ -65,6 +65,12 @@
                         {{ ucwords(auth()->user()->empleado->nombre) }}
                     </a>
                     <small class="text-muted">
+                        {{--
+                            PUNTO DE COLOR:
+                            - Verde (success) = Empleado → usuario normal con acceso restringido
+                            - Rojo (danger)   = Admin    → acceso total al sistema
+                            Es un indicador visual del nivel de privilegios del usuario activo.
+                        --}}
                         <i class="fas fa-circle text-{{ auth()->user()->hasRole('admin') ? 'danger' : 'success' }} mr-1"
                            style="font-size:8px;"></i>
                         {{ ucfirst(auth()->user()->role->name) }}
@@ -87,19 +93,14 @@
                         </a>
                     </li>
 
-                    {{-- Gestión de usuarios: admin ve todo, empleado solo puede ver --}}
+                    @if(auth()->user()->hasRole('admin'))
                     <li class="nav-item">
                         <a href="{{ route('admin.adm_usuario') }}" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>
-                                @if(auth()->user()->hasRole('admin'))
-                                    Gestión Usuarios
-                                @else
-                                    Usuarios
-                                @endif
-                            </p>
+                            <p>Gestión Usuarios</p>
                         </a>
                     </li>
+                    @endif
 
                     {{-- ===== VENTAS ===== --}}
                     <li class="nav-header">Ventas</li>
@@ -117,6 +118,15 @@
                         </a>
                     </li>
 
+                    @if(auth()->user()->hasRole('admin'))
+                    <li class="nav-item">
+                        <a href="{{ route('ventas.reportes') }}" class="nav-link">
+                            <i class="nav-icon fas fa-chart-bar"></i>
+                            <p>Reportes de Ventas</p>
+                        </a>
+                    </li>
+                    @endif
+
                     {{-- ===== ALMACÉN ===== --}}
                     <li class="nav-header">Almacén</li>
 
@@ -133,7 +143,6 @@
                         </a>
                     </li>
 
-                    {{-- Atributos: solo admin gestiona, empleado puede ver --}}
                     @if(auth()->user()->hasRole('admin'))
                     <li class="nav-item">
                         <a href="{{ route('admin.adm_atributo') }}" class="nav-link">
@@ -150,29 +159,23 @@
                         </a>
                     </li>
 
-                    {{-- ===== COMPRAS / PROVEEDORES ===== --}}
+                    @if(auth()->user()->hasRole('admin'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.cuarentena') }}" class="nav-link">
+                            <i class="nav-icon fas fa-biohazard"></i>
+                            <p>Área de Cuarentena</p>
+                        </a>
+                    </li>
+                    @endif
+
+                    {{-- ===== PROVEEDORES ===== --}}
+                    @if(auth()->user()->hasRole('admin'))
                     <li class="nav-header">Proveedores</li>
 
                     <li class="nav-item">
                         <a href="{{ route('admin.adm_proveedor') }}" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
-                            <p>
-                                @if(auth()->user()->hasRole('admin'))
-                                    Gestión Proveedores
-                                @else
-                                    Consulta Proveedores
-                                @endif
-                            </p>
-                        </a>
-                    </li>
-
-                    {{-- Reportes: solo admin (HU12) --}}
-                    @if(auth()->user()->hasRole('admin'))
-                    <li class="nav-header">Reportes</li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.adm_venta') }}" class="nav-link">
-                            <i class="nav-icon fas fa-chart-bar"></i>
-                            <p>Reportes de Ventas</p>
+                            <p>Gestión Proveedores</p>
                         </a>
                     </li>
                     @endif

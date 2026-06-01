@@ -1,0 +1,13 @@
+.table-danger td,
+.table-secondary td {
+    vertical-align: middle;
+}
+
+.badge-lote {
+    font-size: 12px;
+}
+
+#tabla_vencidos,
+#tabla_sin_stock {
+    width: 100% !important;
+}

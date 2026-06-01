@@ -36,4 +36,8 @@ class LoteProducto extends Model
     {
         return $this->hasMany(DetalleVenta::class, 'id_lote');
     }
+    public function cuarentenas()
+    {
+        return $this->hasMany(AreaCuarentena::class, 'id_lote', 'id_lote');
+    }
 }

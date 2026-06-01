@@ -14,7 +14,7 @@ $(document).ready(function () {
 // LISTAR PRODUCTOS
 // ==============================
 function buscar_producto(valor = "") {
-    $.get("/admin/buscar-producto", { buscar: valor }, function (response) {
+    $.get("/admin/buscar-producto", { buscar: valor, solo_disponibles: 1 }, function (response) {
         let template = "";
 
         response.forEach((prod) => {
