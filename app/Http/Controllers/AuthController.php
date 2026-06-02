@@ -14,14 +14,6 @@ class AuthController extends Controller
     public function showLoginForm(){
         return view('auth.login');
     }
-
-// registro para siguiente modulo
-/*
-    public function showRegisterForm(){
-        return view('auth.register');
-    }
-
-*/
     //verificar las credenciales del usuario que se quiere autenticar 
     public function login(Request $request){
         $credentials=$request->only('email','password');
@@ -32,31 +24,6 @@ class AuthController extends Controller
         }
         return back()->withErrors(['email'=>'credenciales incorectas']);
     }
-
-
-//registro al inicio del login 
-/*
-    public function register(Request $request){
-        $request->validate([
-            'name'=>'required',
-            'email'=>'required|email|unique:users',
-            'password'=>'required |min:8|confirmed'
-        ]);
-
-        //que rol
-        $role=Role::where('name','empleado')->first(); //busca un rol bajo la condicion de que el nombre coincida con admin
-
-        $user=User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->password),
-            'role_id'=> $role->id
-        ]);
-
-        Auth::login($user);
-        return $this->redirectToRole ();
-    }
-*/
     protected function redirectToRole(){
         $role=Auth::user()->role->name;
         if($role==='admin'){
@@ -67,7 +34,6 @@ class AuthController extends Controller
             return redirect('/');
         }
     }
-
     //cerrar sesion
     public function logout(Request $request){
         Auth::logout();

@@ -1,0 +1,65 @@
+
+  GET|HEAD        / ....................................... login › AuthController@showLoginForm
+  POST            / ....................................................... AuthController@login
+  GET|HEAD        admin/adm_atributo ............. admin.adm_atributo › AdminController@atributo
+  GET|HEAD        admin/adm_producto .............. admin.adm_producto › AdminController@gesprod
+  GET|HEAD        admin/buscar-empleado .................................. AdminController@index
+  GET|HEAD        admin/buscar-lotes ..................................... LoteController@buscar
+  GET|HEAD        admin/buscar-producto .............................. ProductoController@buscar
+  GET|HEAD        admin/compra .................................................... admin.compra
+  POST            admin/crear-categoria ......... categoria.crear › CategoriaController@crearCat
+  POST            admin/crear-laboratorio ... laboratorio.crear › LaboratorioController@crearlab
+  GET|HEAD        admin/cuarentena ................ admin.cuarentena › LoteController@cuarentena
+  GET|HEAD        admin/cuarentena/datos ......................... LoteController@datoCuarentena
+  GET|HEAD        admin/dashboard .................. admin.dashboard › AdminController@dashboard
+  GET|HEAD        admin/datospersonales ....... admin.datospersonales › AdminController@datosper
+  POST            admin/eliminar-usuario .. usuario.eliminar › GestionController@eliminarUsuario
+  POST            admin/guardar-venta ................................... CompraController@store
+  GET|HEAD        admin/listar-categorias ........................... CategoriaController@listar
+  GET|HEAD        admin/listar-laboratorios ....................... LaboratorioController@listar
+  GET|HEAD        admin/listar-proveedores .......................... ProveedorController@listar
+  GET|HEAD        admin/lotes ............................ admin.lotes › LoteController@loteprod
+  GET|HEAD        admin/lotes-riesgo ................................ LoteController@lotesRiesgo
+  POST            admin/producto/crear ......... admin.producto.crear › ProductoController@crear
+  GET|HEAD        admin/proveedor ............ admin.adm_proveedor › ProveedorController@proveed
+  POST            admin/proveedor/crear .. admin.proveedor.crear › ProveedorController@crearProv
+  GET|HEAD        admin/registrar-usuario .... admin.adm_usuario › GestionController@registroEmp
+  POST            admin/registrar-usuario . admin.registrar.usuario › GestionController@register
+  GET|HEAD        admin/venta ......................... admin.adm_venta › VentaController@ventas
+  DELETE          categoria/{id} .................................. CategoriaController@eliminar
+  PUT             categoria/{id} .................................... CategoriaController@update
+  GET|HEAD        cliente/buscar/{ci} ........................... CompraController@buscarCliente
+  GET|HEAD        datospersonales ...................... usuario.index › UsuarioController@index
+  GET|HEAD        datospersonales/{datospersonale} ....... usuario.show › UsuarioController@show
+  PUT|PATCH       datospersonales/{datospersonale} ... usuario.update › UsuarioController@update
+  GET|HEAD        datospersonales/{datospersonale}/edit .. usuario.edit › UsuarioController@edit
+  GET|HEAD        forgot-password ............................................. password.request
+  POST            forgot-password ............................................... password.email
+  DELETE          laboratorio/{id} .............................. LaboratorioController@eliminar
+  PUT             laboratorio/{id} ................................ LaboratorioController@update
+  POST            laboratorio/{id}/logo ...................... LaboratorioController@cambiarLogo
+  POST            logout ........................................ logout › AuthController@logout
+  POST            lote/crear ................... admin.lote.crear › ProductoController@storeLote
+  PUT             lote/{id} .............................................. LoteController@update
+  DELETE          lote/{id} ............................................ LoteController@eliminar
+  PUT             producto/{id} ...................................... ProductoController@update
+  DELETE          producto/{id} .................................... ProductoController@eliminar
+  POST            producto/{id}/avatar ........................ ProductoController@cambiarAvatar
+  DELETE          proveedor/{id} .................................. ProveedorController@eliminar
+  PUT             proveedor/{id} .................................... ProveedorController@update
+  POST            proveedor/{id}/avatar ...................... ProveedorController@cambiarAvatar
+  POST            reset-password ............................................... password.update
+  GET|HEAD        reset-password/{token} ........................................ password.reset
+  GET|HEAD        storage/{path} ................................................. storage.local
+  GET|HEAD        up ........................................................................... 
+  POST            usuario/cambiar-avatar usuario.cambiarAvatar › UsuarioController@cambiarAvatar
+  POST            usuario/cambiar-contra usuario.cambiarContra › UsuarioController@cambiarContra
+  GET|HEAD        venta/imprimir/{id} ................ venta.imprimir › VentaController@imprimir
+  DELETE          venta/{id} ........................... venta.destroy › VentaController@destroy
+  GET|HEAD        venta/{id}/imprimir ................................. VentaController@imprimir
+  GET|HEAD        ventas/estadisticas ....... ventas.estadisticas › VentaController@estadisticas
+  GET|HEAD        ventas/reportes ................... ventas.reportes › VentaController@reportes
+  GET|HEAD        ventas/reportes/datos ... ventas.reportes.datos › VentaController@datoReportes
+
+                                                                             Showing [61] routes
+

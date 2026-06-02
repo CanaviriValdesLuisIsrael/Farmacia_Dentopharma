@@ -16,7 +16,6 @@ class CategoriaController extends Controller
             'nombre.required' => 'El nombre de la presentacion es obligatorio.',
             'nombre.unique' => 'El nombre ya existe'
         ]);
-
         $lab = Categoria::create([
             'nombre' => $request->nombre
         ]);
