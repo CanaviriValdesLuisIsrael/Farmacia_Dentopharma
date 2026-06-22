@@ -19,13 +19,9 @@ class Empleado extends Model
         'nombre',
         'apellido',
         'fecha_nacimiento',
-        'sexo',
         'direccion',
         'nro_contacto',
         'cargo',
-        'turno',
-        'salario',
-        
     ];
     //  Calcular la edad automáticamente
     public function getEdadAttribute()

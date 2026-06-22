@@ -1,0 +1,68 @@
+/* ============================================================
+   ESTILOS — Módulo de Caja
+   ============================================================ */
+ 
+.caja-estado-card .info-box {
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    border-radius: .5rem;
+}
+ 
+.caja-estado-card .info-box-number {
+    font-size: 1.25rem;
+}
+ 
+.modal-caja .modal-content {
+    border-radius: .75rem;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0,0,0,.2);
+}
+ 
+.modal-caja .modal-header {
+    border-bottom: none;
+}
+ 
+.modal-caja .modal-header .close {
+    opacity: .9;
+}
+ 
+.resumen-cierre {
+    background: #f8f9fa;
+    border-radius: .5rem;
+    padding: 1.25rem;
+    border: 1px solid #e9ecef;
+}
+ 
+/* Botones tipo radio para selector ingreso/egreso */
+.btn-check {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}
+ 
+.btn-check:checked + label {
+    color: #fff !important;
+}
+ 
+.btn-check:checked + label.btn-outline-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+ 
+.btn-check:checked + label.btn-outline-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+ 
+#saldo-actual-display {
+    transition: color .3s ease;
+}
+ 
+#detalle-caja-resumen .resumen-item {
+    padding: .5rem;
+}
+ 
+#detalle-caja-resumen .resumen-item small {
+    display: block;
+    color: #6c757d;
+}

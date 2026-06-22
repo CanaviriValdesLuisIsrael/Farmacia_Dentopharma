@@ -42,9 +42,6 @@ class CompraController extends Controller
                 $cliente = Cliente::create([
                     'nombre' => $request->cliente,
                     'ci' => $request->dni,
-                    'apellido' => '',
-                    'nro_contacto' => '',
-                    'tipo_cliente' => 'Normal'
                 ]);
             }
 

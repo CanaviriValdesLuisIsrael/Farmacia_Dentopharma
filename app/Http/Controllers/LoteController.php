@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\LoteProducto;
 use App\Models\Proveedor;
+use App\Models\Producto;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,19 +47,55 @@ class LoteController extends Controller
 
     // =========================================
     // LOTES EN RIESGO (DASHBOARD)
-    // Solo lotes con stock > 0 que vencen en ≤ 6 meses
+    // Clasifica en 3 categorías:
+    //  - vencidos:   lotes con stock cuya fecha ya pasó (deben retirarse)
+    //  - cuarentena: lotes con stock que vencen en los próximos 90 días
+    //                (prioridad de venta FEFO)
+    //  - sin_stock:  PRODUCTOS sin ningún lote vigente con stock > 0
+    //                (no por lote suelto, para no generar ruido si el
+    //                 producto aún tiene stock en otro lote)
     // =========================================
     public function lotesRiesgo()
     {
-        $limite = Carbon::now()->addMonths(6);
+        $hoy              = Carbon::today();
+        $limiteCuarentena = Carbon::today()->addDays(90);
 
-        $lotes = LoteProducto::with(['producto.laboratorio', 'producto.categoria', 'proveedor'])
+        // VENCIDOS
+        $vencidos = LoteProducto::with(['producto.laboratorio', 'producto.categoria', 'proveedor'])
             ->where('cantidad_por_caja', '>', 0)
-            ->where('fecha_vencimiento', '<=', $limite)
+            ->where('fecha_vencimiento', '<', $hoy)
             ->orderBy('fecha_vencimiento', 'asc')
             ->get();
 
-        return response()->json($lotes);
+        // CUARENTENA (≤ 90 días)
+        $cuarentena = LoteProducto::with(['producto.laboratorio', 'producto.categoria', 'proveedor'])
+            ->where('cantidad_por_caja', '>', 0)
+            ->whereBetween('fecha_vencimiento', [$hoy, $limiteCuarentena])
+            ->orderBy('fecha_vencimiento', 'asc')
+            ->get();
+
+        // SIN STOCK (por producto: ningún lote vigente con cantidad > 0)
+        $sinStock = Producto::with(['laboratorio', 'categoria', 'lotes'])
+            ->get()
+            ->filter(function ($producto) use ($hoy) {
+                $stockVigente = $producto->lotes
+                    ->filter(fn($l) => $l->cantidad_por_caja > 0 && Carbon::parse($l->fecha_vencimiento) >= $hoy)
+                    ->sum('cantidad_por_caja');
+
+                return $stockVigente <= 0;
+            })
+            ->values();
+
+        return response()->json([
+            'vencidos'   => $vencidos,
+            'cuarentena' => $cuarentena,
+            'sin_stock'  => $sinStock,
+            'conteos'    => [
+                'vencidos'   => $vencidos->count(),
+                'cuarentena' => $cuarentena->count(),
+                'sin_stock'  => $sinStock->count(),
+            ],
+        ]);
     }
 
     // =========================================

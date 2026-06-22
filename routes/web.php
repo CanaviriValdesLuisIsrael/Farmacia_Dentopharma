@@ -12,6 +12,8 @@ use App\Http\Controllers\LoteController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\CompraProveedorController;
+use App\Http\Controllers\CajaController;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -107,6 +109,23 @@ Route::middleware(['auth', 'role:admin,empleado', 'prevent-back-history'])->grou
     Route::get('admin/adm_atributo', [AdminController::class, 'atributo'])->name('admin.adm_atributo');
     Route::get('/admin/listar-laboratorios', [LaboratorioController::class, 'listar']);
     Route::get('/admin/listar-categorias', [CategoriaController::class, 'listar']);
+
+    // ============================================================
+    // COMPRAS A PROVEEDOR — ambos roles registran y consultan
+    // ============================================================
+    Route::get('/admin/compras-proveedor', [CompraProveedorController::class, 'index'])->name('admin.compras_proveedor');
+    Route::post('/admin/compras-proveedor', [CompraProveedorController::class, 'store'])->name('admin.compras_proveedor.store');
+    Route::post('/admin/compras-proveedor/{id}/pagar', [CompraProveedorController::class, 'pagar'])->name('admin.compras_proveedor.pagar');
+
+    // ============================================================
+    // CAJA — ambos roles operan la caja diaria
+    // ============================================================
+    Route::get('/admin/caja', [CajaController::class, 'index'])->name('admin.caja');
+    Route::get('/admin/caja/estado', [CajaController::class, 'estado'])->name('admin.caja.estado');
+    Route::post('/admin/caja/abrir', [CajaController::class, 'abrir'])->name('admin.caja.abrir');
+    Route::post('/admin/caja/cerrar', [CajaController::class, 'cerrar'])->name('admin.caja.cerrar');
+    Route::post('/admin/caja/movimiento', [CajaController::class, 'registrarMovimiento'])->name('admin.caja.movimiento');
+    Route::get('/admin/caja/{id}/detalle', [CajaController::class, 'detalle'])->name('admin.caja.detalle');
 });
 
 // ============================================================
@@ -155,4 +174,8 @@ Route::middleware(['auth', 'role:admin', 'prevent-back-history'])->group(functio
     // Cuarentena
     Route::get('/admin/cuarentena', [LoteController::class, 'cuarentena'])->name('admin.cuarentena');
     Route::get('/admin/cuarentena/datos', [LoteController::class, 'datoCuarentena']);
+
+    // Reportes de compras
+    Route::get('/compras/reportes', [CompraProveedorController::class, 'reportes'])->name('compras.reportes');
+    Route::get('/compras/reportes/datos', [CompraProveedorController::class, 'datoReportes'])->name('compras.reportes.datos');
 });

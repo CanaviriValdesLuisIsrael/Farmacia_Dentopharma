@@ -87,7 +87,8 @@
                     <li class="nav-header">Mi Cuenta</li>
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.datospersonales') }}" class="nav-link">
+                        <a href="{{ route('admin.datospersonales') }}"
+                           class="nav-link {{ request()->routeIs('admin.datospersonales') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-user-cog"></i>
                             <p>Datos Personales</p>
                         </a>
@@ -95,7 +96,8 @@
 
                     @if(auth()->user()->hasRole('admin'))
                     <li class="nav-item">
-                        <a href="{{ route('admin.adm_usuario') }}" class="nav-link">
+                        <a href="{{ route('admin.adm_usuario') }}"
+                           class="nav-link {{ request()->routeIs('admin.adm_usuario', 'admin.registrar.usuario') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Gestión Usuarios</p>
                         </a>
@@ -106,7 +108,8 @@
                     <li class="nav-header">Ventas</li>
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.adm_venta') }}" class="nav-link">
+                        <a href="{{ route('admin.adm_venta') }}"
+                           class="nav-link {{ request()->routeIs('admin.adm_venta') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-notes-medical"></i>
                             <p>
                                 @if(auth()->user()->hasRole('admin'))
@@ -120,7 +123,8 @@
 
                     @if(auth()->user()->hasRole('admin'))
                     <li class="nav-item">
-                        <a href="{{ route('ventas.reportes') }}" class="nav-link">
+                        <a href="{{ route('ventas.reportes') }}"
+                           class="nav-link {{ request()->routeIs('ventas.reportes') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-chart-bar"></i>
                             <p>Reportes de Ventas</p>
                         </a>
@@ -131,7 +135,8 @@
                     <li class="nav-header">Almacén</li>
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.adm_producto') }}" class="nav-link">
+                        <a href="{{ route('admin.adm_producto') }}"
+                           class="nav-link {{ request()->routeIs('admin.adm_producto') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-pills"></i>
                             <p>
                                 @if(auth()->user()->hasRole('admin'))
@@ -145,7 +150,8 @@
 
                     @if(auth()->user()->hasRole('admin'))
                     <li class="nav-item">
-                        <a href="{{ route('admin.adm_atributo') }}" class="nav-link">
+                        <a href="{{ route('admin.adm_atributo') }}"
+                           class="nav-link {{ request()->routeIs('admin.adm_atributo') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-vials"></i>
                             <p>Gestión Atributos</p>
                         </a>
@@ -153,7 +159,8 @@
                     @endif
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.lotes') }}" class="nav-link">
+                        <a href="{{ route('admin.lotes') }}"
+                           class="nav-link {{ request()->routeIs('admin.lotes') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-cubes"></i>
                             <p>Gestión Lotes</p>
                         </a>
@@ -161,7 +168,8 @@
 
                     @if(auth()->user()->hasRole('admin'))
                     <li class="nav-item">
-                        <a href="{{ route('admin.cuarentena') }}" class="nav-link">
+                        <a href="{{ route('admin.cuarentena') }}"
+                           class="nav-link {{ request()->routeIs('admin.cuarentena') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-biohazard"></i>
                             <p>Área de Cuarentena</p>
                         </a>
@@ -173,12 +181,42 @@
                     <li class="nav-header">Proveedores</li>
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.adm_proveedor') }}" class="nav-link">
+                        <a href="{{ route('admin.adm_proveedor') }}"
+                           class="nav-link {{ request()->routeIs('admin.adm_proveedor') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-truck"></i>
                             <p>Gestión Proveedores</p>
                         </a>
                     </li>
                     @endif
+
+                    {{-- ===== COMPRAS Y CAJA ===== --}}
+                    <li class="nav-header">Compras y Caja</li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.compras_proveedor') }}"
+                           class="nav-link {{ request()->routeIs('admin.compras_proveedor') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-truck-loading"></i>
+                            <p>Compras a Proveedor</p>
+                        </a>
+                    </li>
+
+                    @if(auth()->user()->hasRole('admin'))
+                    <li class="nav-item">
+                        <a href="{{ route('compras.reportes') }}"
+                           class="nav-link {{ request()->routeIs('compras.reportes') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>Reportes de Compras</p>
+                        </a>
+                    </li>
+                    @endif
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.caja') }}"
+                           class="nav-link {{ request()->routeIs('admin.caja') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-cash-register"></i>
+                            <p>Caja</p>
+                        </a>
+                    </li>
 
                 </ul>
             </nav>

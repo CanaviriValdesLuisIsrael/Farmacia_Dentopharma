@@ -7,16 +7,9 @@
 
 $(document).ready(function () {
     buscarLotes();
-    cargarProductosSelect();
 
     $("#buscarLote").on("keyup", function () {
         buscarLotes($(this).val());
-    });
-
-    // Formulario crear lote (ambos roles)
-    $("#form-crear-lote").on("submit", function (e) {
-        e.preventDefault();
-        crearLote(this);
     });
 });
 
@@ -98,48 +91,6 @@ function buscarLotes(valor = "") {
         });
 
         $("#lotes").html(template);
-    });
-}
-
-// ============================================================
-// CARGAR PRODUCTOS EN SELECT DEL MODAL
-// ============================================================
-function cargarProductosSelect() {
-    $.get("/admin/buscar-producto", { buscar: "" }, function (response) {
-        let options = `<option value="">Seleccione producto</option>`;
-        response.forEach((p) => {
-            options += `<option value="${p.id_producto}">${p.nombre_comercial} — ${p.concentracion}</option>`;
-        });
-        $("#sel_producto").html(options);
-    });
-}
-
-// ============================================================
-// CREAR LOTE (Ambos roles)
-// ============================================================
-function crearLote(form) {
-    const data = $(form).serialize();
-    $.ajax({
-        url: $(form).attr("action"),
-        method: "POST",
-        data: data,
-        success: function (response) {
-            if (response.success) {
-                $("#mensaje-lote").html(
-                    `<div class="alert alert-success">${response.mensaje}</div>`
-                );
-                buscarLotes();
-                setTimeout(() => $("#crearLote").modal("hide"), 1200);
-            } else {
-                $("#mensaje-lote").html(
-                    `<div class="alert alert-danger">${response.mensaje}</div>`
-                );
-            }
-        },
-        error: function (xhr) {
-            const err = xhr.responseJSON?.mensaje || "Error al registrar lote.";
-            $("#mensaje-lote").html(`<div class="alert alert-danger">${err}</div>`);
-        },
     });
 }
 

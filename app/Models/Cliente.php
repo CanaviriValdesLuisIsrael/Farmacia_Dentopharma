@@ -13,9 +13,6 @@ class Cliente extends Model
     protected $fillable = [
         'ci',
         'nombre',
-        'apellido',
-        'nro_contacto',
-        'tipo_cliente'
     ];
 
     public function ventas()

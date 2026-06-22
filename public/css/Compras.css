@@ -1,0 +1,48 @@
+/* ============================================================
+   ESTILOS — Módulo de Compras a Proveedor
+   ============================================================ */
+ 
+.modal-compra .modal-content {
+    border-radius: .75rem;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0,0,0,.2);
+}
+ 
+.modal-compra .modal-header {
+    border-bottom: none;
+}
+ 
+.modal-compra .modal-header .close {
+    opacity: .9;
+}
+ 
+#tabla-items-compra th {
+    font-size: .8rem;
+    vertical-align: middle;
+}
+ 
+#tabla-items-compra td {
+    vertical-align: middle;
+}
+ 
+.fila-item-compra .precio-unitario-display,
+.fila-item-compra .total-unidades-display,
+.fila-item-compra .subtotal-display {
+    background: #f8f9fa;
+    padding: .35rem .5rem;
+    border-radius: .25rem;
+    font-size: .85rem;
+}
+ 
+#total-compra-display {
+    font-size: 1.8rem;
+}
+ 
+.upp-hint {
+    font-size: .7rem;
+}
+ 
+#alerta-caja {
+    border-radius: .5rem;
+}

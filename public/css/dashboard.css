@@ -80,6 +80,14 @@
 .fila-proximo {
     background-color: #fff3cd !important; /* amarillo suave */
 }
+
+.fila-sinstock {
+    background-color: #e2e3e5 !important; /* gris suave */
+}
+
+.filtro-alerta {
+    cursor: pointer;
+}
 .thead-suave {
     background-color: #d1ecf1; /* azul suave */
     color: #0c5460;

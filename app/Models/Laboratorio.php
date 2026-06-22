@@ -15,7 +15,6 @@ class Laboratorio extends Model
     protected $fillable = [
         'nombre',
         'telefono',
-        'correo',
         'direccion',
         'avatar'
     ];

@@ -243,8 +243,6 @@ aqui colocas tu navegador
                                 <div class="text-center">
                                     <img src="{{ auth()->user()->avatar ? asset('storage/avatars/' . auth()->user()->avatar) : asset('img/avatar5.png') }}"
                                         class="profile-user-img img-fluid img-circle" alt="Avatar">
-
-
                                 </div>
                                 <div class="text-center mt-2">
                                     <button type="button" data-toggle="modal" data-target="#cambioavatar"
@@ -260,7 +258,7 @@ aqui colocas tu navegador
                                             class="float-right">{{ auth()->user()->empleado->edad }}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b style="color: #1f31b8">DNI</b><a
+                                        <b style="color: #1f31b8">CI</b><a
                                             class="float-right">{{ auth()->user()->empleado->ci }}</a>
                                     </li>
                                     <li class="list-group-item">
@@ -270,8 +268,6 @@ aqui colocas tu navegador
                                     </li>
                                     <button type="button" class="btn bg-gradient-primary" data-toggle="modal"
                                         data-target="#cambiocontra"> Cambiar contraseña </button>
-
-
                                 </ul>
                             </div>
                         </div>
@@ -292,10 +288,6 @@ aqui colocas tu navegador
                                     <i class="fas fa-at mr-1"></i>Correo
                                 </strong>
                                 <p class="text-muted">{{ auth()->user()->email }}</p>
-                                <strong style="color: #1f31b8">
-                                    <i class="fas fa-smile-wink mr-1"></i>sexo
-                                </strong>
-                                <p class="text-muted">{{ auth()->user()->empleado->sexo }}</p>
                                 <strong style="color: #1f31b8">
                                     <i class="fas fa-pencil mr-1"></i>Informacion adicional
                                 </strong>

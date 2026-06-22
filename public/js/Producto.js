@@ -94,10 +94,6 @@ function buscar_producto(valor = "") {
                             <i class="fas fa-edit"></i>
                         </button>` : ''}
 
-                        <button class="btn btn-primary btn-agregar" data-id="${prod.id_producto}" title="A\xf1adir lote">
-                            <i class="fas fa-plus"></i> Lote
-                        </button>
-
                         ${productoConfig.esAdmin ? `
                         <button class="btn btn-danger btn-eliminar" data-id="${prod.id_producto}" title="Eliminar">
                             <i class="fas fa-trash"></i>
@@ -323,40 +319,6 @@ $(document).on("submit", "#form-editar-producto", function (e) {
 });
 
 // ==============================
-// CREAR LOTE
-// ==============================
-$(document).on("submit", "#form-crear-lote", function (e) {
-    e.preventDefault();
-
-    let form = $(this);
-
-    $.ajax({
-        url: "/lote/crear",
-        method: "POST",
-        data: form.serialize(),
-
-        success: function (response) {
-            $("#crearlote").modal("hide");
-
-            Swal.fire("Correcto", response.mensaje, "success");
-
-            buscar_producto(); //  actualiza stock
-        },
-
-        error: function (xhr) {
-            let mensaje = "Error al crear lote";
-
-            if (xhr.responseJSON?.errors) {
-                mensaje = Object.values(xhr.responseJSON.errors)
-                    .flat()
-                    .join("\n");
-            }
-
-            Swal.fire("Error", mensaje, "error");
-        },
-    });
-});
-// ==============================
 // ELIMINAR PRODUCTO
 // ==============================
 $(document).on("click", ".btn-eliminar", function () {
@@ -390,27 +352,4 @@ $(document).on("click", ".btn-eliminar", function () {
             });
         }
     });
-});
-
-// ==============================
-// ABRIR MODAL CREAR LOTE
-// ==============================
-$(document).on("click", ".btn-agregar", function () {
-    let id = $(this).data("id");
-
-    let card = $(this).closest(".producto-card");
-    let nombre = card.find("h5").text();
-
-    // colocar datos en modal
-    $("#producto_id_lote").val(id);
-    $("#nombre_producto_lote").text(nombre);
-
-    // limpiar form
-    $("#form-crear-lote")[0].reset();
-
-    // fecha mínima = hoy
-    let hoy = new Date().toISOString().split("T")[0];
-    $("#fecha_vencimiento").attr("min", hoy);
-
-    $("#crearlote").modal("show");
 });

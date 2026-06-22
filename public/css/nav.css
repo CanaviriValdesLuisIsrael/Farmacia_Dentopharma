@@ -1,3 +1,34 @@
+/* ============================================================
+   SIDEBAR — Item activo
+   ============================================================ */
+
+/* Fondo con degradado suave al item activo */
+.nav-sidebar .nav-link.active {
+    background: linear-gradient(90deg, rgba(192,57,43,0.18) 0%, rgba(231,76,60,0.08) 100%) !important;
+    border-left: 3px solid #e74c3c !important;
+    color: #e74c3c !important;
+    border-radius: 0 8px 8px 0 !important;
+    font-weight: 600;
+}
+
+/* Icono activo */
+.nav-sidebar .nav-link.active .nav-icon {
+    color: #e74c3c !important;
+}
+
+/* Hover en items no activos */
+.nav-sidebar .nav-link:not(.active):hover {
+    background: rgba(231, 76, 60, 0.06) !important;
+    border-left: 3px solid rgba(231, 76, 60, 0.3) !important;
+    border-radius: 0 8px 8px 0 !important;
+    color: #e74c3c !important;
+    transition: all 0.18s ease;
+}
+.nav-sidebar .nav-link:not(.active):hover .nav-icon {
+    color: #e74c3c !important;
+}
+
+/* ---- Carrito ---- */
 .carro *{
     position: relative;
 

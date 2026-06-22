@@ -1,0 +1,234 @@
+/* ============================================================
+   MODALES — Farmacia Dentopharma
+   Color institucional: Azul pizarra profesional
+   #2c4a6e → #3a6186  (transmite confianza, no alarma)
+   ============================================================ */
+
+/* ---------- Backdrop ---------- */
+.modal-backdrop.show {
+    opacity: 0.5;
+    backdrop-filter: blur(2px);
+}
+
+/* ---------- Animación de entrada ---------- */
+.modal.fade .modal-dialog {
+    transform: translateY(-18px) scale(0.98);
+    transition: transform 0.22s ease, opacity 0.22s ease;
+}
+.modal.show .modal-dialog {
+    transform: translateY(0) scale(1);
+}
+
+/* ---------- Contenedor ---------- */
+.modal-content {
+    border: none !important;
+    border-radius: 14px !important;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ---------- Encabezado — azul pizarra ---------- */
+.modal-content .card-danger > .card-header,
+.modal-content .modal-header,
+.modal-content .modal-header.bg-gradient-danger {
+    background: linear-gradient(135deg, #2c4a6e 0%, #3a6186 100%) !important;
+    border-bottom: none !important;
+    padding: 16px 24px !important;
+    border-radius: 0 !important;
+}
+
+.modal-content .card-danger > .card-header .card-title,
+.modal-content .modal-header .modal-title {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: #fff !important;
+}
+
+/* Botón × blanco */
+.modal-content .card-header .close,
+.modal-content .modal-header .close {
+    color: rgba(255,255,255,0.85) !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    font-size: 1.4rem;
+    transition: color 0.15s;
+}
+.modal-content .card-header .close:hover,
+.modal-content .modal-header .close:hover {
+    color: #fff !important;
+}
+
+/* ---------- Cuerpo ---------- */
+.modal-content .card-body,
+.modal-content .modal-body {
+    padding: 22px 26px !important;
+    background: #fff;
+}
+
+/* ---------- Labels ---------- */
+.modal-content .form-group label,
+.modal-content label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #4a5568;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* ---------- Inputs ---------- */
+.modal-content .form-control {
+    border: 1.5px solid #dde3ec !important;
+    border-radius: 8px !important;
+    padding: 8px 13px !important;
+    font-size: 0.9rem;
+    color: #2d3748;
+    background: #f7f9fc;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.modal-content .form-control:focus {
+    border-color: #3a6186 !important;
+    box-shadow: 0 0 0 3px rgba(58,97,134,0.14) !important;
+    background: #fff;
+    outline: none;
+}
+.modal-content .form-control::placeholder {
+    color: #a0aec0;
+    font-size: 0.87rem;
+}
+
+/* ---------- Inputs tamaño sm en tablas (fila de productos) ---------- */
+.modal-content .form-control-sm {
+    border-radius: 6px !important;
+    padding: 5px 9px !important;
+    font-size: 0.84rem !important;
+    min-width: 0;
+}
+.modal-content .form-control-sm:focus {
+    border-color: #3a6186 !important;
+    box-shadow: 0 0 0 2px rgba(58,97,134,0.16) !important;
+    background: #fff;
+}
+
+/* ---------- Tabla de productos dentro del modal ---------- */
+.modal-content table.table thead th {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+    background: #2c4a6e !important;
+    padding: 10px 8px !important;
+    border: none !important;
+    white-space: nowrap;
+}
+.modal-content table.table tbody tr {
+    transition: background 0.12s;
+}
+.modal-content table.table tbody tr:hover {
+    background: #f0f5fb !important;
+}
+.modal-content table.table tbody td {
+    padding: 7px 6px !important;
+    vertical-align: middle !important;
+    border-color: #edf2f7 !important;
+}
+/* Línea separadora de columnas sutil */
+.modal-content table.table tbody td + td {
+    border-left: 1px solid #edf2f7 !important;
+}
+
+/* ---------- Alertas / info-box dentro del modal ---------- */
+.modal-content .alert-info,
+.modal-content .alert-teal {
+    background: #e8f4fd;
+    border: 1px solid #bee3f8;
+    border-radius: 8px;
+    color: #2b6cb0;
+}
+
+/* ---------- Footer ---------- */
+.modal-content .card-footer,
+.modal-content .modal-footer {
+    background: #f7f9fc !important;
+    border-top: 1px solid #edf2f7 !important;
+    padding: 13px 24px !important;
+    border-radius: 0 0 14px 14px !important;
+}
+
+/* ---------- Botón primario (Guardar / Registrar) ---------- */
+.modal-content .btn-primary,
+.modal-content .bg-gradient-primary,
+.modal-content .btn-danger:not(.btn-outline-danger):not(.btn-sm),
+.modal-content button[type="submit"]:not(.btn-sm) {
+    background: linear-gradient(135deg, #2c4a6e, #3a6186) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 9px 22px !important;
+    font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 0.3px;
+    color: #fff !important;
+    transition: opacity 0.18s, transform 0.14s, box-shadow 0.18s;
+    box-shadow: 0 4px 14px rgba(44,74,110,0.35);
+}
+.modal-content .btn-primary:hover,
+.modal-content .bg-gradient-primary:hover,
+.modal-content .btn-danger:not(.btn-outline-danger):not(.btn-sm):hover,
+.modal-content button[type="submit"]:not(.btn-sm):hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(44,74,110,0.4);
+}
+
+/* ---------- Botón secundario (Cancelar / Cerrar) ---------- */
+.modal-content .btn-secondary,
+.modal-content .btn-outline-secondary,
+.modal-content button[data-dismiss="modal"]:not(.close) {
+    background: transparent !important;
+    border: 1.5px solid #cbd5e0 !important;
+    border-radius: 8px !important;
+    padding: 8px 20px !important;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #4a5568 !important;
+    transition: background 0.15s, border-color 0.15s;
+}
+.modal-content .btn-secondary:hover,
+.modal-content .btn-outline-secondary:hover {
+    background: #edf2f7 !important;
+    border-color: #a0aec0 !important;
+}
+
+/* ---------- Botón agregar producto (outline azul) ---------- */
+.modal-content .btn-outline-primary {
+    border-color: #3a6186 !important;
+    color: #3a6186 !important;
+    border-radius: 7px !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: background 0.15s, color 0.15s;
+}
+.modal-content .btn-outline-primary:hover {
+    background: #3a6186 !important;
+    color: #fff !important;
+}
+
+/* ---------- Botón eliminar fila (mantiene rojo, es acción destructiva) ---------- */
+.modal-content .btn-outline-danger.btn-sm {
+    border-radius: 6px !important;
+}
+
+/* ---------- Total a pagar (quitar rojo, usar azul) ---------- */
+#total-compra-display {
+    color: #2c4a6e !important;
+}
+
+/* ---------- Quitar sombras/bordes card de AdminLTE dentro del modal ---------- */
+.modal-content .card-danger {
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 0 !important;
+}

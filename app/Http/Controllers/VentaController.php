@@ -48,6 +48,10 @@ class VentaController extends Controller
         return view('admin.adm_reportes_ventas');
     }
 
+    public function reportescompra()
+    {
+        return view('admin.adm_reportes_compras');
+    }
     // =========================================
     // DATOS AJAX PARA REPORTES
     // =========================================
@@ -121,8 +125,10 @@ class VentaController extends Controller
 
         // Por categoría
         $porCategoria = $detalles->groupBy(fn($d) => $d->producto->categoria->nombre ?? 'Sin categoría')
-            ->map(fn($g) => ['categoria' => $g->first()->producto->categoria->nombre ?? 'Sin categoría',
-                             'total' => round($g->sum(fn($d) => $d->cantidad * $d->precio_unitario), 2)])
+            ->map(fn($g) => [
+                'categoria' => $g->first()->producto->categoria->nombre ?? 'Sin categoría',
+                'total' => round($g->sum(fn($d) => $d->cantidad * $d->precio_unitario), 2)
+            ])
             ->values();
 
         // Lista simple ventas

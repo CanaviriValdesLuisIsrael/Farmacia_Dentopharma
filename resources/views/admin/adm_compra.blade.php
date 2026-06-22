@@ -12,12 +12,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Compra</h1>
+                    <h1>Venta</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Compra</li>
+                        <li class="breadcrumb-item active">Venta</li>
                     </ol>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                                 <div class="logo_cp">
                                     <img src="../img/logo.png" width="100" height="100">
                                 </div>
-                                <h1 class="titulo_cp">SOLICITUD DE COMPRA</h1>
+                                <h1 class="titulo_cp">VENTA DE MEDICAMENTOS</h1>
                                 <div class="datos_cp">
                                     <div class="form-group row">
                                         <span>Cliente: </span>
@@ -61,9 +61,7 @@
                                     </div>
                                 </div>
                             </header>
-                            <!--
-                        <button id="actualizar"class="btn btn-success">Actualizar</button>
--->
+                           
                             <div id="cp"class="card-body p-0">
                                 <table class="compra table table-hover text-nowrap">
                                     <thead class='table-success'>
@@ -100,23 +98,6 @@
                                                         <span class="info-box-number" id="subtotal">10</span>
                                                     </div>
                                                 </div>
-                                                <!--
-                                            <div class="info-box mb-3 bg-warning">
-                                                <span class="info-box-icon"><i class="fas fa-tag"></i></span>
-                                                <div class="info-box-content">
-                                                    <span class="info-box-text text-left ">IGV</span>
-                                                    <span class="info-box-number"id="con_igv">2</span>
-                                                </div>
-                                            </div>
-                                            <div class="info-box mb-3 bg-info">
-                                                <span class="info-box-icon"><i class="fas fa-tag"></i></span>
-                                                <div class="info-box-content">
-                                                    <span class="info-box-text text-left ">SIN DESCUENTO</span>
-                                                    <span class="info-box-number" id="total_sin_descuento">12</span>
-                                                </div>
-                                            </div>
--->
-
                                             </div>
                                         </div>
                                     </div>

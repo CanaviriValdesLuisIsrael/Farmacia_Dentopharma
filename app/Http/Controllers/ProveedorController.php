@@ -16,7 +16,7 @@ class ProveedorController extends Controller
         $request->validate([
             'nombre' => 'required|unique:proveedor,nombre',
             'nro_contacto' => 'required|unique:proveedor,nro_contacto',
-            'correo' => 'required|email|unique:proveedor,correo',
+            'correo' => 'nullable|email|unique:proveedor,correo',
             'direccion' => 'nullable'
         ], [
             'nombre.required' => 'El nombre del proveedor es obligatorio.',
