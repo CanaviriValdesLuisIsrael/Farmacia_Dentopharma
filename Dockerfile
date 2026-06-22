@@ -1,33 +1,20 @@
-FROM php:8.3-cli
+FROM php:8.2-fpm
 
 WORKDIR /var/www/html
 
-# Dependencias del sistema
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    zip \
-    curl \
-    libzip-dev \
-    nodejs \
-    npm \
-    && docker-php-ext-install zip pdo pdo_mysql
+    git unzip zip curl libzip-dev libpng-dev libonig-dev libxml2-dev nodejs npm \
+    && docker-php-ext-install zip pdo pdo_mysql mbstring exif pcntl bcmath gd
 
-# Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copiar proyecto
 COPY . .
 
-# Instalar dependencias PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Instalar dependencias Node y compilar Vite
-RUN npm install
-RUN npm run build
+RUN npm install && npm run build
 
-# Limpiar cachés
-RUN php artisan config:clear
+RUN chmod -R 775 storage bootstrap/cache
 
 EXPOSE 10000
 
