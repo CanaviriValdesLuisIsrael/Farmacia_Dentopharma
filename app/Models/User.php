@@ -2,21 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPasswordContract
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, CanResetPassword;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -26,21 +21,11 @@ class User extends Authenticatable
         'avatar',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -48,17 +33,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    //conecta con otra tabla role   
+
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
-    
+
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_empleado','id_empleado');
+        return $this->belongsTo(Empleado::class, 'id_empleado', 'id_empleado');
     }
-    public function hasRole($role){
-    return $this->role && $this->role->name === $role;
-}
+
+    public function hasRole($role)
+    {
+        return $this->role && $this->role->name === $role;
+    }
 }
