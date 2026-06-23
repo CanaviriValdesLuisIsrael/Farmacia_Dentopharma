@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
 use Illuminate\Validation\ValidationException;
 
-use Illuminate\Support\Facades\Mail;
-use App\Mail\BienvenidaEmpleado;
+use App\Services\BrevoMailer;
 
 class GestionController extends Controller
 {
@@ -62,8 +61,21 @@ class GestionController extends Controller
 
             // Enviar correo de bienvenida con credenciales
             try {
-                Mail::to($request->email)->send(
-                    new BienvenidaEmpleado($request->nombre, $request->email, $request->password)
+                BrevoMailer::send(
+                    $request->email,
+                    $request->nombre,
+                    'Bienvenido a Farmacia Dentopharma',
+                    "
+                        <h2>Bienvenido, {$request->nombre}</h2>
+                        <p>Has sido registrado en el sistema de <strong>Farmacia Dentopharma</strong>.</p>
+                        <p>Tus credenciales de acceso son:</p>
+                        <table>
+                            <tr><td><strong>Correo:</strong></td><td>{$request->email}</td></tr>
+                            <tr><td><strong>Contraseña:</strong></td><td>{$request->password}</td></tr>
+                        </table>
+                        <p>Por seguridad, te recomendamos cambiar tu contraseña luego de iniciar sesión.</p>
+                        <p>Saludos,<br><strong>Farmacia Dentopharma</strong></p>
+                        "
                 );
             } catch (\Exception $e) {
                 \Log::error('Error enviando correo al empleado: ' . $e->getMessage());

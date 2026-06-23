@@ -48,4 +48,8 @@ class User extends Authenticatable implements CanResetPasswordContract
     {
         return $this->role && $this->role->name === $role;
     }
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new \App\Notifications\ResetPasswordNotification($token));
+    }
 }
