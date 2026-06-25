@@ -35,7 +35,7 @@
                         </thead>
                         <tbody id="carrito-body"></tbody>
                     </table>
-                    <a href="#" class="btn btn-danger btn-block btn-procesar">Procesar Compra</a>
+                    <a href="#" class="btn btn-danger btn-block btn-procesar">Procesar Venta</a>
                     <a href="#" class="btn btn-primary btn-block btn-vaciar">Vaciar Carrito</a>
                 </div>
             </li>

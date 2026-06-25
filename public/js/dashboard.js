@@ -41,8 +41,8 @@ function buscar_producto(valor = "") {
                 <div class="card producto-card">
 
                     <div class="producto-header">
-                    <h6>  Codigo ${prod.id_producto}</h6>
-                       <i class="fas fa-lg fa-cubes mr-1"></i> ${prod.stock_total ?? 0}
+                    
+                       <i class="fas fa-lg fa-cubes mr-1"></i>Stock ${prod.stock_total ?? 0}
                     </div>
 
                     <div class="card-body">
@@ -129,7 +129,7 @@ function renderizarAlertas() {
     let template = "";
 
     if (filasAMostrar.length === 0) {
-        template = `<tr><td colspan="7" class="text-center text-muted py-3">No hay registros en esta categoría 🎉</td></tr>`;
+        template = `<tr><td colspan="7" class="text-center text-muted py-3">No hay registros en esta categoría </td></tr>`;
     }
 
     filasAMostrar.forEach((item) => {

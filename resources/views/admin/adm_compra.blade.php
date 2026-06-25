@@ -92,7 +92,7 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="info-box mb-3 bg-warning p-0">
-                                                    <span class="info-box-icon">Bs</i></span>
+                                                    <span class="info-box-icon">Bs</span>
                                                     <div class="info-box-content">
                                                         <span class="info-box-text text-left ">SUB TOTAL</span>
                                                         <span class="info-box-number" id="subtotal">10</span>
@@ -111,8 +111,8 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="info-box mb-3 bg-danger">
-                                                    <span class="info-box-icon"><i
-                                                            class="fas fa-comment-dollar"></i></span>
+                                                    <span class="info-box-icon">Bs
+                                                            </span>
                                                     <div class="info-box-content">
                                                         <span class="info-box-text text-left ">DESCUENTO</span>
                                                         <input id="descuento"type="number" min="1"
