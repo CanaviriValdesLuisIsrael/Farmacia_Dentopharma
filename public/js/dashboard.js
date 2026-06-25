@@ -57,6 +57,7 @@ function buscar_producto(valor = "") {
                             </div>
 
                             <div class="col-8">
+                            
                                 <h5>${prod.nombre_comercial}</h5>
                                 <h4 class="precio">Bs. ${prod.precio_referencia}</h4>
 
